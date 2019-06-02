@@ -1,4 +1,3 @@
-
 // Enemy class
 var Enemy = function (x, y, speed) {
 
@@ -102,15 +101,15 @@ Player.prototype.handleInput = function (keyboardKeys) {
             // The Modal from https://www.w3schools.com/howto/howto_css_modals.asp
             let modal = document.getElementById('myModal');
             let modalContent = document.querySelector('.modal-content')
-            let htmlTextToAdd = `Congratulations, you Won !`;
+            let htmlTextToAdd = `Congratulations, you won the game !`;
             modalContent.insertAdjacentHTML('beforeend', htmlTextToAdd);
 
-            //create "Play Again" button
-            let btnToAdd = `<br/><button id="myBtn">Play Again</button>`
+            //Exit message button
+            let btnToAdd = `<br/><button id="myBtn">Exit !</button>`
             modalContent.insertAdjacentHTML('beforeend', btnToAdd);
             modal.style.display = "block";
 
-            // When the user clicks the button, reset the game
+            // When the user clicks the button, exit the message and play again
             let btn = document.getElementById("myBtn");
             btn.onclick = function () {
                 let modalContent = document.querySelector('.modal-content')

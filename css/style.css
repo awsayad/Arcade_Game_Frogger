@@ -1,5 +1,6 @@
 body {
     text-align: center;
+    background: #ffffff url('../images/geometry2.png'); /* Background pattern from Subtle Patterns */
 }
 
 /* The Modal (background) - from https://www.w3schools.com/howto/howto_css_modals.asp */
@@ -26,21 +27,6 @@ body {
     width: 35%;
   }
   
-  /* The Close Button */
-  .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
   #myBtn {
     background-color: #4CAF50;
     border: none;
