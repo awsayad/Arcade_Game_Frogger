@@ -8,7 +8,7 @@ var Enemy = function (x, y, speed) {
     this.sprite = 'images/enemy-bug.png';
 };
 
-// This function will assist with enemies movements
+// The update function responsible for enemy movements, speed & collision
 Enemy.prototype.update = function (dt) {
 
     this.x += this.speed * dt;
@@ -36,25 +36,70 @@ var Player = function (x, y) {
     this.y = y;
 
     // Player image
-    this.sprite = 'image/char-boy.png';
+    this.sprite = 'images/char-cat-girl.png';
 };
 
+// The player update function responsible for player movements
 Player.prototype.update = function (dt) {
 
 };
 
+// Draw the player on the screen
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.handleInput(keyClick)
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
+// Array for all enemies
 let allEnemies = [];
-let player = new Player
 
+// Position of the enemies on the y axis
+let enemyPosition = [63, 147, 230];
+
+// For each enemy located on the y axis from 0 on the x axis move at a speed of 200 
+// Until randomly regenerated in the enemy update function above
+enemyPosition.forEach(function (y) {
+    let enemy = new Enemy(0, y, 250);
+    allEnemies.push(enemy);
+});
+
+// The starting location of the player
+let player = new Player(200, 420)
+
+Player.prototype.handleInput = function (keyboardKeys) {
+
+    // Move player object Left on the x axis when using keyboard left arrow key
+    // and remain within game boarder
+    if (keyboardKeys == 'left' && this.x > 0) {
+        this.x -= 105;
+    };
+
+    // Move player object Right on the x axis when using keyboard right arrow key
+    // and remain within game boarder
+    if (keyboardKeys == 'right' && this.x < 405) {
+        this.x += 105;
+    };
+
+    // Move player object Up on the y axis when using keyboard up arrow key
+    // and remain within game boarder
+    if (keyboardKeys == 'up' && this.y > 0) {
+        this.y -= 90;
+    };
+
+    // Move player object Down on the y axis when using keyboard down arrow key
+    // and remain within game boarder
+    if (keyboardKeys == 'down' && this.y < 405) {
+        this.y += 90;
+    };
+
+    // Reset player position when reaching the water
+    if (this.y < 0) {
+        setTimeout(() => {
+            alert("You Won !")
+            this.x = 200;
+            this.y = 420;
+        }, 100);
+    };
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
