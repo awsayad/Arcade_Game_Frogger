@@ -1,14 +1,15 @@
+
 // Enemy class
 var Enemy = function (x, y, speed) {
 
-    // The enemy variables including, X & Y corrdinator, an image and Speed variable
+    // The enemy X & Y corrdinator, its image and speed variable
     this.x = x;
     this.y = y;
     this.speed = speed;
     this.sprite = 'images/enemy-bug.png';
 };
 
-// The update function responsible for enemy movements, speed & collision
+// The update function responsible for enemy movements, speed calculation & collision
 Enemy.prototype.update = function (dt) {
 
     this.x += this.speed * dt;
@@ -19,8 +20,15 @@ Enemy.prototype.update = function (dt) {
         this.speed = 100 + Math.floor(Math.random() * 200);
     };
 
-    // Need to check when collision occure:
-
+    // Check when collision occure:
+    // similar concept from Stackoverflow: https://stackoverflow.com/questions/13916966/
+    if (player.x < this.x + 50 &&
+        player.x + 50 > this.x &&
+        player.y < this.y + 30 &&
+        player.y + 30 > this.y) {
+        player.x = 200;
+        player.y = 420;
+    };
 };
 
 // Draw the enemy on the screen, required method for game
@@ -35,10 +43,9 @@ var Player = function (x, y) {
     this.x = x;
     this.y = y;
 
-    // Player image
+    // Player image source
     this.sprite = 'images/char-cat-girl.png';
 };
-
 // The player update function responsible for player movements
 Player.prototype.update = function (dt) {
 
@@ -53,16 +60,13 @@ Player.prototype.render = function () {
 let allEnemies = [];
 
 // Position of the enemies on the y axis
-let enemyPosition = [63, 147, 230];
-
-// For each enemy located on the y axis from 0 on the x axis move at a speed of 200 
-// Until randomly regenerated in the enemy update function above
-enemyPosition.forEach(function (y) {
+let enemyPositionY = [58, 145, 230];
+enemyPositionY.forEach(function (y) {
     let enemy = new Enemy(0, y, 250);
     allEnemies.push(enemy);
 });
 
-// The starting location of the player
+// The starting position of the player
 let player = new Player(200, 420)
 
 Player.prototype.handleInput = function (keyboardKeys) {
@@ -94,7 +98,25 @@ Player.prototype.handleInput = function (keyboardKeys) {
     // Reset player position when reaching the water
     if (this.y < 0) {
         setTimeout(() => {
-            alert("You Won !")
+
+            // The Modal from https://www.w3schools.com/howto/howto_css_modals.asp
+            let modal = document.getElementById('myModal');
+            let modalContent = document.querySelector('.modal-content')
+            let htmlTextToAdd = `Congratulations, you Won !`;
+            modalContent.insertAdjacentHTML('beforeend', htmlTextToAdd);
+
+            //create "Play Again" button
+            let btnToAdd = `<br/><button id="myBtn">Play Again</button>`
+            modalContent.insertAdjacentHTML('beforeend', btnToAdd);
+            modal.style.display = "block";
+
+            // When the user clicks the button, reset the game
+            let btn = document.getElementById("myBtn");
+            btn.onclick = function () {
+                let modalContent = document.querySelector('.modal-content')
+                modalContent.innerHTML = '';
+                modal.style.display = "none";
+            }
             this.x = 200;
             this.y = 420;
         }, 100);
